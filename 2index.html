@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <style>
+        body {
+            background-color: #ffccff; /* Pink background */
+            color: #004d00; /* Bottle green text */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        #question {
+            margin-top: 20%;
+            font-size: 2em;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 1.5em;
+            margin: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff66b3; /* Light pink */
+            color: white;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        #celebration {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+            animation: zoomIn 1s ease-in-out;
+        }
+        @keyframes zoomIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+        #birthdayMessage {
+            display: none;
+            font-size: 1.5em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: slideIn 1s ease-in-out;
+        }
+        @keyframes slideIn {
+            0% { transform: translate(-50%, -100%); }
+            100% { transform: translate(-50%, -50%); }
+        }
+        .nickname {
+            position: absolute;
+            font-size: 2em;
+            opacity: 0.7;
+            animation: float 5s infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+        #finalMessage {
+            display: none;
+            font-size: 3em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff66b3; /* Light pink */
+            animation: fadeIn 2s ease-in-out;
+        }
+        #smallParagraphs {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
+            text-align: left;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .left-paragraphs, .right-paragraphs {
+            width: 45%;
+            display: inline-block;
+            vertical-align: top;
+            margin: 10px;
+        }
+        .left-paragraphs {
+            text-align: left;
+        }
+        .right-paragraphs {
+            text-align: right;
+        }
+        .paragraph {
+            margin-bottom: 30px; /* Decent gap between paragraphs */
+            line-height: 1.5;
+        }
+        #hugeParagraph {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
+            font-size: 1.5em;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            animation: slideIn 1s ease-in-out;
+        }
+        #loveAnimation {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            color: #ff66b3; /* Light pink */
+            animation: zoomIn 2s ease-in-out;
+        }
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            color: #ff66b3; /* Light pink */
+            animation: moveHearts 5s linear infinite;
+        }
+        @keyframes moveHearts {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+        /* Balloon Animations */
+        .balloon {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            border-radius: 50%;
+            animation: floatUp 6s infinite ease-in;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(-100vh); }
+        }
+        /* Colorful Bulbs */
+        .bulb {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: blink 1s infinite alternate;
+        }
+        @keyframes blink {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Colorful Bulbs -->
+<div id="bulbs"></div>
+
+<!-- Balloons -->
+<div id="balloons"></div>
+
+<div id="question">
+    <p>Do you love me?</p>
+    <button class="button" id="yesButton" onclick="handleResponse('yes')">Yes</button>
+    <button class="button" id="noButton" onclick="handleResponse('no')">No</button>
+</div>
+
+<div id="celebration">
+    <h1>You're ma...</h1>
+    <div id="confetti"></div>
+</div>
+
+<div id="birthdayMessage"></div>
+<div id="finalMessage"></div>
+
+<!-- Small Paragraphs Section -->
+<div id="smallParagraphs">
+    <div class="left-paragraphs">
+        <div class="paragraph">
+            <p>You are my sunshine, my reason to smile,</p>
+            <p>my everything, my love. You make life beautiful.</p>
+        </div>
+        <div class="paragraph">
+            <p>Your laughter is music, your smile is magic,</p>
+            <p>your love is my world. I cherish you forever.</p>
+        </div>
+    </div>
+    <div class="right-paragraphs">
+        <div class="paragraph">
+            <p>Every moment with you feels like a dream,</p>
+            <p>a dream I never want to wake up from.</p>
+        </div>
+        <div class="paragraph">
+            <p>You are my strength, my joy, my everything,</p>
+            <p>and I love you more than words can express.</p>
+        </div>
+    </div>
+    <button class="button" onclick="showHugeParagraph()">Next</button>
+</div>
+
+<!-- Huge Paragraph Section -->
+<div id="hugeParagraph">
+    <p>My love for you is endless, like the stars in the sky. You are my everything, my princess, my jaan, my darling, my sweetheart, my love, my baby, my kucchhuuu pucchuu, my bongi, my wifey. I am so lucky to have you in my life. Happy Birthday, my love! ❤️</p>
+    <button class="button" onclick="showLoveAnimation()">Next</button>
+</div>
+
+<!-- Love Animation Section -->
+<div id="loveAnimation">
+    I LOVE YOUUU JAAAAAAN ❤️
+</div>
+
+<script>
+    const loveStatements = [
+        "Are you sure?",
+        "Think about it...",
+        "Don't do this to me...",
+        "Please reconsider...",
+        "You mean the world to me...",
+        "I can't imagine life without you...",
+        "You're my everything...",
+        "Think again, jaan...",
+        "You're my sunshine...",
+        "You make my heart smile..."
+    ];
+
+    const nicknames = ["Princess", "Jaan", "Darling", "Sweetheart", "My Love", "Ma Baby", "Kucchhuuu Pucchuu", "Bongi", "Jaana", "Wifey"];
+    let loveIndex = 0;
+
+    // Add Balloons
+    const balloonColors = ["#ff66b3", "#ffcc00", "#66ccff", "#ff6666", "#cc66ff"];
+    for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = `${Math.random() * 100}%`;
+        balloon.style.backgroundColor = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+        balloon.style.animationDuration = `${Math.random() * 6 + 4}s`;
+        document.getElementById('balloons').appendChild(balloon);
+    }
+
+    // Add Colorful Bulbs
+    const bulbColors = ["#ff6666", "#66ff66", "#6666ff", "#ffcc00", "#cc66ff"];
+    for (let i = 0; i < 20; i++) {
+        const bulb = document.createElement('div');
+        bulb.className = 'bulb';
+        bulb.style.left = `${Math.random() * 100}%`;
+        bulb.style.top = `${Math.random() * 10}%`;
+        bulb.style.backgroundColor = bulbColors[Math.floor(Math.random() * bulbColors.length)];
+        bulb.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+        document.getElementById('bulbs').appendChild(bulb);
+    }
+
+    function handleResponse(response) {
+        if (response === 'no') {
+            if (loveIndex < loveStatements.length) {
+                document.getElementById('question').innerHTML = `<p>${loveStatements[loveIndex]}</p>
+                    <button class="button" id="yesButton" onclick="handleResponse('yes')">Yes</button>
+                    <button class="button" id="noButton" onclick="handleResponse('no')">No</button>`;
+                loveIndex++;
+            } else {
+                document.getElementById('question').innerHTML = `<p>Are you really sure?</p>
+                    <button class="button" id="yesButton" onclick="handleResponse('yes')">Yes</button>
+                    <button class="button" id="noButton" onclick="handleResponse('no')">No</button>`;
+            }
+        } else if (response === 'yes') {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+            startCelebration();
+        }
+    }
+
+    function startCelebration() {
+        // Add multiple copies of nicknames
+        for (let i = 0; i < 20; i++) { // Add 20 copies of each nickname
+            nicknames.forEach((name) => {
+                const nicknameElement = document.createElement('div');
+                nicknameElement.className = 'nickname';
+                nicknameElement.innerText = name;
+                nicknameElement.style.left = `${Math.random() * 100}%`;
+                nicknameElement.style.top = `${Math.random() * 100}%`;
+                nicknameElement.style.animationDuration = `${Math.random() * 5 + 3}s`;
+                document.getElementById('celebration').appendChild(nicknameElement);
+            });
+        }
+
+        // Show birthday message after 5 seconds
+        setTimeout(() => {
+            document.getElementById('celebration').style.display = 'none';
+            document.getElementById('birthdayMessage').style.display = 'block';
+            document.getElementById('birthdayMessage').innerHTML = `
+                <h1>Happy Birthday, My Love! 🎂</h1>
+                <p>You are my everything, my princess, my jaan, my darling, my sweetheart, my love, my baby, my kucchhuuu pucchuu, my bongi, my wifey. I am so lucky to have you in my life. Happy Birthday, my love!</p>
+                <button class="button" onclick="showSmallParagraphs()">Next</button>
+            `;
+        }, 5000);
+    }
+
+    function showSmallParagraphs() {
+        document.getElementById('birthdayMessage').style.display = 'none';
+        document.getElementById('smallParagraphs').style.display = 'block';
+    }
+
+    function showHugeParagraph() {
+        document.getElementById('smallParagraphs').style.display = 'none';
+        document.getElementById('hugeParagraph').style.display = 'block';
+    }
+
+    function showLoveAnimation() {
+        document.getElementById('hugeParagraph').style.display = 'none';
+        document.getElementById('loveAnimation').style.display = 'block';
+
+        // Add pink hearts animation
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.top = `${Math.random() * 100}%`;
+            heart.style.animationDuration = `${Math.random() * 5 + 3}s`;
+            document.body.appendChild(heart);
+        }
+    }
+</script>
+</body>
+</html>
